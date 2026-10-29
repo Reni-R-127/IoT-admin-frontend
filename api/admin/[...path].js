@@ -1,48 +1,89 @@
 export default async function handler(req, res) {
-  const backend = process.env.ADMIN_API_TARGET;
+  const backendUrl = process.env.ADMIN_API_TARGET;
   const adminKey = process.env.ADMIN_API_KEY;
 
-  if (!backend || !adminKey) {
+  if (!backendUrl || !adminKey) {
     return res.status(500).json({
-      message: "Admin API proxy is not configured in Vercel."
+      message: "Admin API proxy environment variables are missing.",
     });
   }
 
-  const pathParts = req.query.path;
-  const path = Array.isArray(pathParts)
-    ? pathParts.map(encodeURIComponent).join("/")
-    : "";
+  if (adminKey.length < 32) {
+    return res.status(500).json({
+      message: "Admin API key configuration is invalid.",
+    });
+  }
 
-  const queryIndex = req.url.indexOf("?");
-  const query = queryIndex >= 0 ? req.url.slice(queryIndex) : "";
+  const requestUrl = new URL(req.url, "https://localhost");
+  const targetUrl = new URL(
+    `${requestUrl.pathname}${requestUrl.search}`,
+    backendUrl.replace(/\/+$/, "") + "/"
+  );
 
-  const target = `${backend.replace(/\/+$/, "")}/api/admin/${path}${query}`;
+  const headers = new Headers();
+
+  for (const [key, value] of Object.entries(req.headers)) {
+    if (
+      value &&
+      ![
+        "host",
+        "connection",
+        "content-length",
+        "x-admin-key",
+      ].includes(key.toLowerCase())
+    ) {
+      headers.set(
+        key,
+        Array.isArray(value) ? value.join(", ") : value
+      );
+    }
+  }
+
+  headers.set("x-admin-key", adminKey);
 
   try {
-    const response = await fetch(target, {
+    const options = {
       method: req.method,
-      headers: {
-        "Content-Type": req.headers["content-type"] || "application/json",
-        "x-admin-key": adminKey
-      },
-      ...(req.method !== "GET" && req.method !== "HEAD"
-        ? { body: JSON.stringify(req.body ?? {}) }
-        : {})
-    });
+      headers,
+      redirect: "manual",
+    };
 
-    const text = await response.text();
+    if (!["GET", "HEAD"].includes(req.method)) {
+      const chunks = [];
+
+      for await (const chunk of req) {
+        chunks.push(chunk);
+      }
+
+      if (chunks.length > 0) {
+        options.body = Buffer.concat(chunks);
+      }
+    }
+
+    const response = await fetch(targetUrl, options);
 
     res.status(response.status);
-    res.setHeader(
-      "Content-Type",
-      response.headers.get("content-type") || "application/json"
-    );
 
-    return res.send(text);
+    response.headers.forEach((value, key) => {
+      if (
+        ![
+          "transfer-encoding",
+          "content-encoding",
+          "content-length",
+        ].includes(key.toLowerCase())
+      ) {
+        res.setHeader(key, value);
+      }
+    });
+
+    const data = Buffer.from(await response.arrayBuffer());
+
+    return res.send(data);
   } catch (error) {
     console.error("Admin proxy error:", error.message);
+
     return res.status(502).json({
-      message: "Unable to connect to admin backend."
+      message: "Unable to connect to the admin backend.",
     });
   }
 }
