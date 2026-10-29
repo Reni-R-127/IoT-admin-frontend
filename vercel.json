@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/admin/:path*",
+      "destination": "https://iot-admin-backend.onrender.com/api/admin/:path*"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
