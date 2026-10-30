@@ -1,0 +1,2 @@
+import ResourcePage from "../common/ResourcePage";
+export default function NotificationsPage(){return <ResourcePage title="Notifications" eyebrow="SYSTEM / NOTIFICATIONS" description="Review system and website notifications." endpoint="/notifications" columns={[{key:"title",label:"Title"},{key:"type",label:"Type"},{key:"message",label:"Message"},{key:"source",label:"Source"},{key:"read",label:"Read",render:r=>r.read?"Read":"Unread"}]} fields={[{key:"read",label:"Read status",options:[{value:"true",label:"Read"},{value:"false",label:"Unread"}]}]} allowDelete/>}
