@@ -1,0 +1,209 @@
+/**
+ * File: admin-frontend/src/pages/auth/AuthPages.css
+ *
+ * Purpose:
+ * Shared styling for Admin authentication pages.
+ */
+
+.admin-auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(circle at 10% 10%, #dff8f7 0, transparent 30%),
+    radial-gradient(circle at 90% 90%, #e4efff 0, transparent 35%),
+    #f3f7fc;
+}
+
+.admin-auth-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 36px;
+  border: 1px solid #e2eaf4;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 18px 55px rgba(20, 48, 85, 0.1);
+  box-sizing: border-box;
+}
+
+.admin-auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.admin-auth-logo {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #08bbaa;
+  color: #062b35;
+  font-size: 19px;
+  font-weight: 900;
+}
+
+.admin-auth-brand strong {
+  display: block;
+  color: #10264d;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.admin-auth-brand small {
+  display: block;
+  margin-top: 3px;
+  color: #71819a;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.admin-auth-eyebrow {
+  color: #08a99e;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+}
+
+.admin-auth-card h1 {
+  margin: 10px 0;
+  color: #10264d;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.admin-auth-description {
+  margin: 0 0 25px;
+  color: #71819a;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.admin-auth-form {
+  display: grid;
+  gap: 17px;
+}
+
+.admin-auth-field {
+  display: grid;
+  gap: 8px;
+  color: #172e56;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.admin-auth-field input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid #d7e2ef;
+  border-radius: 10px;
+  background: #fff;
+  color: #10264d;
+  font: inherit;
+  font-weight: 500;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.admin-auth-field input:focus {
+  border-color: #08bbaa;
+  box-shadow: 0 0 0 3px rgba(8, 187, 170, 0.12);
+}
+
+.admin-auth-button {
+  width: 100%;
+  min-height: 49px;
+  margin-top: 5px;
+  border: 0;
+  border-radius: 10px;
+  background: #08bbaa;
+  color: #062b35;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.admin-auth-button:hover:not(:disabled) {
+  background: #06a99b;
+}
+
+.admin-auth-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-auth-error,
+.admin-auth-success {
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.admin-auth-error {
+  border: 1px solid #fecaca;
+  background: #fff1f0;
+  color: #b42318;
+}
+
+.admin-auth-success {
+  border: 1px solid #a7e7d4;
+  background: #edfcf7;
+  color: #08775e;
+}
+
+.admin-auth-rules {
+  margin: 0;
+  padding: 12px 15px 12px 30px;
+  border-radius: 10px;
+  background: #f5f9ff;
+  color: #65758e;
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.admin-auth-footer {
+  margin-top: 25px;
+  color: #8996a9;
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .admin-auth-page {
+    padding: 15px;
+  }
+
+  .admin-auth-card {
+    padding: 25px 20px;
+  }
+
+  .admin-auth-card h1 {
+    font-size: 26px;
+  }
+}
+
+/* Login type switch links */
+
+.admin-auth-switch {
+  margin: 17px 0 0;
+  color: #71819a;
+  font-size: 13px;
+  text-align: center;
+}
+
+.admin-auth-switch a {
+  color: #078f88;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.admin-auth-switch a:hover {
+  text-decoration: underline;
+}

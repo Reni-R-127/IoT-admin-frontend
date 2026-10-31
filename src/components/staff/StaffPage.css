@@ -1,26 +1,295 @@
+/**
+ * File: admin-frontend/src/components/staff/StaffPage.css
+ *
+ * Purpose:
+ * Staff account form, directory, and page-permission editor.
+ */
+
 .staff-layout {
   display: grid;
-  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
   gap: 18px;
+  align-items: start;
 }
+
 .staff-page .settings-card {
   min-width: 0;
 }
-.permission-title {
-  display: block;
-  margin-bottom: 10px;
+
+.staff-form-hint {
+  margin: 8px 0 18px;
+  color: #6b7890;
   font-size: 12px;
+  line-height: 1.55;
 }
-.permission-item input {
-  accent-color: #08bba9;
+
+.staff-active-toggle {
+  margin-top: 4px;
 }
-.staff-actions {
+
+.staff-actions,
+.staff-row-actions {
   display: flex;
+  align-items: center;
   gap: 9px;
   flex-wrap: wrap;
 }
-@media (max-width: 1000px) {
+
+.staff-row-actions {
+  min-width: 190px;
+}
+
+.staff-text-button,
+.staff-danger-button {
+  border: 0;
+  padding: 5px 0;
+  background: transparent;
+  color: #087f86;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.staff-text-button:hover {
+  color: #075a61;
+  text-decoration: underline;
+}
+
+.staff-danger-button {
+  color: #c62828;
+}
+
+.staff-danger-button:hover {
+  color: #991b1b;
+  text-decoration: underline;
+}
+
+.staff-status-active {
+  background: #e7f8ef;
+  color: #087443;
+}
+
+.staff-status-inactive {
+  background: #fff0f0;
+  color: #b42318;
+}
+
+.temporary-credentials {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 16px 0;
+  padding: 18px;
+  border: 1px solid #a7e7d4;
+  border-radius: 12px;
+  background: #effcf7;
+}
+
+.temporary-credentials > div {
+  display: grid;
+  gap: 6px;
+  min-width: 220px;
+  flex: 1;
+}
+
+.temporary-credentials strong {
+  color: #075e4b;
+  font-size: 14px;
+}
+
+.temporary-credentials p,
+.temporary-credentials small {
+  margin: 0;
+  color: #397463;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.temporary-credentials code {
+  width: fit-content;
+  max-width: 100%;
+  padding: 8px 10px;
+  overflow-wrap: anywhere;
+  border: 1px dashed #6ebca6;
+  border-radius: 7px;
+  background: #fff;
+  color: #143d35;
+  font-size: 13px;
+  user-select: all;
+}
+
+.staff-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(8, 18, 32, 0.62);
+  overflow-y: auto;
+}
+
+.staff-permission-modal {
+  width: min(760px, 100%);
+  max-height: min(88vh, 850px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #dce5ef;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+}
+
+.staff-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 24px 16px;
+  border-bottom: 1px solid #e8edf3;
+}
+
+.staff-modal-header h2 {
+  margin: 7px 0 5px;
+  color: #14294b;
+  font-size: 22px;
+}
+
+.staff-modal-header p {
+  margin: 0;
+  color: #697991;
+  font-size: 13px;
+}
+
+.staff-modal-close {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: #f0f4f8;
+  color: #34445e;
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.staff-modal-close:hover {
+  background: #e4ebf2;
+}
+
+.staff-permission-summary {
+  padding: 12px 24px;
+  border-bottom: 1px solid #edf1f5;
+  color: #087f86;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.staff-permission-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 18px 24px;
+  overflow-y: auto;
+}
+
+.staff-permission-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 13px;
+  border: 1px solid #e1e8f0;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.staff-permission-option:has(input:checked) {
+  border-color: #0aafa4;
+  background: #f0fbfa;
+}
+
+.staff-permission-option input {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: #08bba9;
+  flex: 0 0 auto;
+}
+
+.staff-permission-option span {
+  display: grid;
+  gap: 4px;
+}
+
+.staff-permission-option strong {
+  color: #1b3153;
+  font-size: 13px;
+}
+
+.staff-permission-option small {
+  color: #738198;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.staff-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #e8edf3;
+  background: #fbfcfe;
+}
+
+.staff-modal-footer > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+@media (max-width: 1100px) {
   .staff-layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .staff-modal-backdrop {
+    padding: 10px;
+  }
+
+  .staff-permission-modal {
+    max-height: 94vh;
+  }
+
+  .staff-modal-header,
+  .staff-permission-grid,
+  .staff-modal-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .staff-permission-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-modal-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .staff-modal-footer > div {
+    justify-content: flex-end;
+  }
+
+  .temporary-credentials > button {
+    width: 100%;
   }
 }
